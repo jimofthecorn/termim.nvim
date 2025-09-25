@@ -6,7 +6,8 @@ termim.auto_close = function()
     vim.api.nvim_create_autocmd({ 'TermClose' }, {
         group = vim.api.nvim_create_augroup(termim.close_augroup, { clear = true }),
         callback = function()
-            vim.cmd('quit')
+            vim.api.nvim_buf_delete(0, { force = true })
+            -- vim.cmd('quit!')
         end,
     })
 end
@@ -32,6 +33,7 @@ termim.open = function(command, split_dir, keep_open)
         termim.auto_close()
     end
 
+    -- vim.cmd(split_dir .. ' | terminal! ' .. command)
     vim.cmd(split_dir .. ' term://' .. command)
 end
 
